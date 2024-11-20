@@ -2,7 +2,7 @@ public class Input {
     private String value;
     private int count;
 
-    public Input(String w, int i){
+    public Input(String w, int i){//parameter rename
         this.value =w;
         this.count =i;
     }
