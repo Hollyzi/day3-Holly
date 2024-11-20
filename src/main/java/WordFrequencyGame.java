@@ -11,7 +11,7 @@ public class WordFrequencyGame {
         if (sentence.split(SPACE).length == 1) {
             return sentence + " 1";
         } else {//unuse else
-            try {//do to many
+            try {
                 //split the input string with 1 to n pieces of spaces
                 List<WordFrequency> wordFrequencies = getInitiateWordFrequencies(sentence);
 
@@ -52,18 +52,8 @@ public class WordFrequencyGame {
     }
 
     private Map<String, List<WordFrequency>> getListMap(List<WordFrequency> wordFrequencies) {
-        Map<String, List<WordFrequency>> map = new HashMap<>();
-        for (WordFrequency wordFrequency : wordFrequencies) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(wordFrequency.getWord())) {
-                ArrayList arr = new ArrayList<>();
-                arr.add(wordFrequency);
-                map.put(wordFrequency.getWord(), arr);
-            } else {
-                map.get(wordFrequency.getWord()).add(wordFrequency);
-            }
-        }
-        return map;
+        return wordFrequencies.stream()
+                .collect(Collectors.groupingBy(WordFrequency::getWord));
     }
 
 
