@@ -11,26 +11,34 @@ public class WordFrequencyGame {
         } else {//unuse else
             try {//do to many
                 //split the input string with 1 to n pieces of spaces
-                String[] words = sentence.split("\\s+");
+                String[] words = sentence.split(SPACE);
+
                 List<WordFrequency> wordFrequencies = new ArrayList<>();
-                for (String word : words) {
+
+                List<WordFrequency> finalWordFrequencies = wordFrequencies;
+                Arrays.stream(words).forEach(word->{
                     WordFrequency wordFrequency = new WordFrequency(word, 1);
-                    wordFrequencies.add(wordFrequency);
-                }
+                    finalWordFrequencies.add(wordFrequency);
+                });
+
+
                 //get the map for the next step of sizing the same word
                 Map<String, List<WordFrequency>> wordToWordfrequencies = getListMap(wordFrequencies);
                 List<WordFrequency> templeWordfrequencies = new ArrayList<>();
-                for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequencies.entrySet()) {//stream
+
+                for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequencies.entrySet()) {
                     WordFrequency input = new WordFrequency(entry.getKey(), entry.getValue().size());
                     templeWordfrequencies.add(input);//unneed temp value
                 }
                 wordFrequencies = templeWordfrequencies;
                 wordFrequencies.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
                 StringJoiner joiner = new StringJoiner("\n");
-                for (WordFrequency wordFrequency : wordFrequencies) {//stream;for loop ->function
+
+                wordFrequencies.stream().forEach(wordFrequency -> {
                     String s = wordFrequency.getWord() + " " + wordFrequency.getWordCount();
                     joiner.add(s);
-                }
+                });
+
                 return joiner.toString();
             } catch (Exception e) {
                 return CALCULATE_ERROR;
