@@ -27,8 +27,6 @@ public class WordFrequencyGame {
     }
 
     private static String getStringJoiner(List<WordFrequency> wordFrequencies) {
-        StringJoiner joiner = new StringJoiner(LINE_BREAK);
-
         return wordFrequencies.stream()
                 .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
                 .collect(Collectors.joining(LINE_BREAK));
