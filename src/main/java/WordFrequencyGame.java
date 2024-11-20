@@ -1,8 +1,11 @@
 import java.util.*;
 
 public class WordFrequencyGame {
+
+    public static final String SPACE = "\\s+";
+
     public String getWordFrequency(String sentence) {
-        if (sentence.split("\\s+").length == 1) {//constant
+        if (sentence.split(SPACE).length == 1) {//constant
             return sentence + " 1";
         } else {//unuse else
             try {//do to many
@@ -14,14 +17,14 @@ public class WordFrequencyGame {
                     wordFrequencies.add(wordFrequency);
                 }
                 //get the map for the next step of sizing the same word
-                Map<String, List<WordFrequency>> map = getListMap(wordFrequencies);//param rename
-                List<WordFrequency> list = new ArrayList<>();
-                for (Map.Entry<String, List<WordFrequency>> entry : map.entrySet()) {//stream
+                Map<String, List<WordFrequency>> wordToWordfrequencies = getListMap(wordFrequencies);
+                List<WordFrequency> templeWordfrequencies = new ArrayList<>();
+                for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequencies.entrySet()) {//stream
                     WordFrequency input = new WordFrequency(entry.getKey(), entry.getValue().size());
-                    list.add(input);//unneed temp value
+                    templeWordfrequencies.add(input);//unneed temp value
                 }
-                wordFrequencies = list;
-                wordFrequencies.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());//param rename
+                wordFrequencies = templeWordfrequencies;
+                wordFrequencies.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
                 StringJoiner joiner = new StringJoiner("\n");
                 for (WordFrequency wordFrequency : wordFrequencies) {//stream;for loop ->function
                     String s = wordFrequency.getWord() + " " + wordFrequency.getWordCount();
@@ -34,16 +37,16 @@ public class WordFrequencyGame {
         }
     }
 
-    private Map<String, List<WordFrequency>> getListMap(List<WordFrequency> inputList) {
+    private Map<String, List<WordFrequency>> getListMap(List<WordFrequency> wordFrequencies) {
         Map<String, List<WordFrequency>> map = new HashMap<>();
-        for (WordFrequency input : inputList) {//stream
+        for (WordFrequency wordFrequency : wordFrequencies) {//stream
 //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(input.getWord())) {
+            if (!map.containsKey(wordFrequency.getWord())) {
                 ArrayList arr = new ArrayList<>();
-                arr.add(input);
-                map.put(input.getWord(), arr);
+                arr.add(wordFrequency);
+                map.put(wordFrequency.getWord(), arr);
             } else {
-                map.get(input.getWord()).add(input);
+                map.get(wordFrequency.getWord()).add(wordFrequency);
             }
         }
         return map;
