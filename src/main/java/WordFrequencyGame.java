@@ -13,29 +13,39 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 List<WordFrequency> wordFrequencies = getInitiateWordFrequencies(sentence);
 
-
                 //get the map for the next step of sizing the same word
-                Map<String, List<WordFrequency>> wordToWordfrequencies = getListMap(wordFrequencies);
-                List<WordFrequency> templeWordfrequencies = new ArrayList<>();
+                wordFrequencies = getWordFrequenciesMap(wordFrequencies);
 
-                for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequencies.entrySet()) {
-                    WordFrequency input = new WordFrequency(entry.getKey(), entry.getValue().size());
-                    templeWordfrequencies.add(input);//unneed temp value
-                }
-                wordFrequencies = templeWordfrequencies;
-                wordFrequencies.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
-                StringJoiner joiner = new StringJoiner("\n");
-
-                wordFrequencies.stream().forEach(wordFrequency -> {
-                    String s = wordFrequency.getWord() + " " + wordFrequency.getWordCount();
-                    joiner.add(s);
-                });
+                StringJoiner joiner = getStringJoiner(wordFrequencies);
 
                 return joiner.toString();
             } catch (Exception e) {
                 return CALCULATE_ERROR;
             }
         }
+    }
+
+    private static StringJoiner getStringJoiner(List<WordFrequency> wordFrequencies) {
+        StringJoiner joiner = new StringJoiner("\n");
+
+        wordFrequencies.stream().forEach(wordFrequency -> {
+            String s = wordFrequency.getWord() + " " + wordFrequency.getWordCount();
+            joiner.add(s);
+        });
+        return joiner;
+    }
+
+    private List<WordFrequency> getWordFrequenciesMap(List<WordFrequency> wordFrequencies) {
+        Map<String, List<WordFrequency>> wordToWordfrequencies = getListMap(wordFrequencies);
+        List<WordFrequency> templeWordfrequencies = new ArrayList<>();
+
+        for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequencies.entrySet()) {
+            WordFrequency input = new WordFrequency(entry.getKey(), entry.getValue().size());
+            templeWordfrequencies.add(input);//unneed temp value
+        }
+        wordFrequencies = templeWordfrequencies;
+        wordFrequencies.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
+        return wordFrequencies;
     }
 
     private static List<WordFrequency> getInitiateWordFrequencies(String sentence) {
