@@ -5,6 +5,7 @@ public class WordFrequencyGame {
 
     public static final String SPACE = "\\s+";
     public static final String CALCULATE_ERROR = "Calculate Error";
+    public static final String LINE_BREAK = "\n";
 
     public String getWordFrequency(String sentence) {
         if (sentence.split(SPACE).length == 1) {//constant
@@ -17,23 +18,20 @@ public class WordFrequencyGame {
                 //get the map for the next step of sizing the same word
                 wordFrequencies = getWordFrequenciesMap(wordFrequencies);
 
-                StringJoiner joiner = getStringJoiner(wordFrequencies);
+                return getStringJoiner(wordFrequencies);
 
-                return joiner.toString();
             } catch (Exception e) {
                 return CALCULATE_ERROR;
             }
         }
     }
 
-    private static StringJoiner getStringJoiner(List<WordFrequency> wordFrequencies) {
-        StringJoiner joiner = new StringJoiner("\n");
+    private static String getStringJoiner(List<WordFrequency> wordFrequencies) {
+        StringJoiner joiner = new StringJoiner(LINE_BREAK);
 
-        wordFrequencies.stream().forEach(wordFrequency -> {
-            String s = wordFrequency.getWord() + " " + wordFrequency.getWordCount();
-            joiner.add(s);
-        });
-        return joiner;
+        return wordFrequencies.stream()
+                .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
+                .collect(Collectors.joining(LINE_BREAK));
     }
 
     private List<WordFrequency> getWordFrequenciesMap(List<WordFrequency> wordFrequencies) {
