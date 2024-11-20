@@ -3,6 +3,7 @@ import java.util.*;
 public class WordFrequencyGame {
 
     public static final String SPACE = "\\s+";
+    public static final String CALCULATE_ERROR = "Calculate Error";
 
     public String getWordFrequency(String sentence) {
         if (sentence.split(SPACE).length == 1) {//constant
@@ -12,7 +13,7 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] words = sentence.split("\\s+");
                 List<WordFrequency> wordFrequencies = new ArrayList<>();
-                for (String word : words) {//stream
+                for (String word : words) {
                     WordFrequency wordFrequency = new WordFrequency(word, 1);
                     wordFrequencies.add(wordFrequency);
                 }
@@ -32,7 +33,7 @@ public class WordFrequencyGame {
                 }
                 return joiner.toString();
             } catch (Exception e) {
-                return "Calculate Error";
+                return CALCULATE_ERROR;
             }
         }
     }
