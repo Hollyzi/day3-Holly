@@ -6,11 +6,12 @@ public class WordFrequencyGame {
     public static final String SPACE = "\\s+";
     public static final String CALCULATE_ERROR = "Calculate Error";
     public static final String LINE_BREAK = "\n";
+    public static final String BLANK = " ";
 
     public String getWordFrequency(String sentence) {
         if (sentence.split(SPACE).length == 1) {
             return sentence + " 1";
-        } else {//unuse else
+        } else {
             try {
                 //split the input string with 1 to n pieces of spaces
                 List<WordFrequency> wordFrequencies = getInitiateWordFrequencies(sentence);
@@ -28,7 +29,7 @@ public class WordFrequencyGame {
 
     private static String getStringJoiner(List<WordFrequency> wordFrequencies) {
         return wordFrequencies.stream()
-                .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
+                .map(wordFrequency -> wordFrequency.getWord() + BLANK + wordFrequency.getWordCount())
                 .collect(Collectors.joining(LINE_BREAK));
     }
 
@@ -55,6 +56,5 @@ public class WordFrequencyGame {
         return wordFrequencies.stream()
                 .collect(Collectors.groupingBy(WordFrequency::getWord));
     }
-
 
 }
